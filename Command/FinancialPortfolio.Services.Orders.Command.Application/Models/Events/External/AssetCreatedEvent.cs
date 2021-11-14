@@ -5,7 +5,7 @@ using FinancialPortfolio.Messaging;
 namespace FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External
 {
     [Message("Assets", "Asset")]
-    public class AssetCreatedEvent : IEvent
+    public record AssetCreatedEvent : IEvent
     {
         public Guid Id { get; }
         

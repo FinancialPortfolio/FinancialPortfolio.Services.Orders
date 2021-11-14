@@ -10,4 +10,8 @@
       <ProjectReference Include="..\FinancialPortfolio.Services.Orders.Query.Application\FinancialPortfolio.Services.Orders.Query.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FinancialPortfolio.WebHosting" Version="1.3.0" />
+    </ItemGroup>
+
 </Project>
