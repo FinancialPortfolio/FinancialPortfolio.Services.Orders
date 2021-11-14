@@ -1,0 +1,44 @@
+﻿using System;
+using FinancialPortfolio.DDD;
+using FinancialPortfolio.Services.Orders.Domain.Enums;
+using FinancialPortfolio.Services.Orders.Domain.Events;
+
+namespace FinancialPortfolio.Services.Orders.Domain.Entities
+{
+    public class Order : Entity, IAggregateRoot
+    {
+        public OrderType Type { get; }
+        
+        public double Amount { get; }
+        
+        public decimal Price { get; }
+        
+        public DateTime DateTime { get; }
+        
+        public decimal Commission { get; }
+        
+        public Guid AssetId { get; }
+        
+        public Guid AccountId { get; }
+
+        private Order(OrderType type, double amount, decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId)
+        {
+            Type = type;
+            Amount = amount;
+            Price = price;
+            DateTime = dateTime;
+            Commission = commission;
+            AssetId = assetId;
+            AccountId = accountId;
+        }
+
+        public static Order Create(OrderType type, double amount, decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId)
+        {
+            var order = new Order(type, amount, price, dateTime, commission, assetId, accountId);
+            order.AddEvent(new OrderCreatedDomainEvent(order.Id, order.Version, order.Type, 
+                order.Amount, order.Price, order.DateTime, order.Commission, order.AssetId, order.AccountId));
+
+            return order;
+        }
+    }
+}
