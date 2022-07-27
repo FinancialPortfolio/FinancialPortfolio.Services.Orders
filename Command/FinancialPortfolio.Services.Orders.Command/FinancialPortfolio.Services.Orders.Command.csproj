@@ -15,4 +15,10 @@
       <ProjectReference Include="..\FinancialPortfolio.Services.Orders.Command.Application\FinancialPortfolio.Services.Orders.Command.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
