@@ -1,11 +1,7 @@
 ﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "profiles": {
-    "FinancialPortfolio.Services.Orders.Command": {
-      "commandName": "Project",
-      "environmentVariables": {
-        
-      }
+    "profiles": {
+        "FinancialPortfolio.Services.Orders.Command": {
+            "commandName": "Project"
+        }
     }
-  }
 }

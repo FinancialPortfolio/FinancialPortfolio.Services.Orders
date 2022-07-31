@@ -1,17 +1,11 @@
 ﻿{
-  "profiles": {
-    "FinancialPortfolio.Services.Orders.Query": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5006;http://localhost:6006"
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "publishAllPorts": true,
-      "useSSL": true
+    "profiles": {
+        "FinancialPortfolio.Services.Orders.Query": {
+            "commandName": "Project",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "applicationUrl": "https://localhost:5006;http://localhost:6006"
+        }
     }
-  }
 }
