@@ -1,7 +1,10 @@
 ﻿{
     "profiles": {
         "FinancialPortfolio.Services.Orders.Command": {
-            "commandName": "Project"
+            "commandName": "Project",
+            "environmentVariables": {
+                "Environment": "Development"
+            }
         }
     }
 }
