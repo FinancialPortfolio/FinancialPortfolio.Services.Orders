@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using FinancialPortfolio.Infrastructure;
 
 namespace FinancialPortfolio.Services.Orders.Command
 {
@@ -6,7 +7,7 @@ namespace FinancialPortfolio.Services.Orders.Command
     {
         private static async Task Main(string[] args)
         {
-            await Hosting.Application.RunAsync(args, Startup.ConfigureServices);
+            await HostApplication.RunAsync(args, Startup.ConfigureServices);
         }
     }
 }

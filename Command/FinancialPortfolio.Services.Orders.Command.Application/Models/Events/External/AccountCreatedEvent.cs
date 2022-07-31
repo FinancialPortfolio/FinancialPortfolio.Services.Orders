@@ -1,6 +1,6 @@
 ﻿using System;
 using FinancialPortfolio.CQRS.Events;
-using FinancialPortfolio.Messaging;
+using FinancialPortfolio.Messaging.Attributes;
 
 namespace FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External
 {

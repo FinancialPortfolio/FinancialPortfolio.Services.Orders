@@ -1,6 +1,6 @@
 ﻿using System;
 using FinancialPortfolio.CQRS.Commands;
-using FinancialPortfolio.Messaging;
+using FinancialPortfolio.Messaging.Attributes;
 using FinancialPortfolio.Services.Orders.Domain.Enums;
 
 namespace FinancialPortfolio.Services.Orders.Command.Application.Models.Commands

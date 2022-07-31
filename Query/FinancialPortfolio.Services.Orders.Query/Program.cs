@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using FinancialPortfolio.Infrastructure.WebApi;
 
 namespace FinancialPortfolio.Services.Orders.Query
 {
@@ -6,7 +7,7 @@ namespace FinancialPortfolio.Services.Orders.Query
     {
         public static async Task Main(string[] args)
         {
-            await WebHosting.Application.RunAsync(args, typeof(Startup));
+            await WebApplication.RunAsync(args, typeof(Startup));
         }
     }
 }

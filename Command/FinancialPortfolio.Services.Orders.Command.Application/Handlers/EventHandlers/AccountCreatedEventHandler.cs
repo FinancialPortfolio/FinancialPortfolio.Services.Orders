@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using FinancialPortfolio.CQRS.Events;
+using FinancialPortfolio.Messaging.Models;
 using FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External;
 using FinancialPortfolio.Services.Orders.Command.Application.Models.Exceptions;
 using FinancialPortfolio.Services.Orders.Domain.Entities;
@@ -16,7 +17,7 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.EventH
             _accountRepository = accountRepository;
         }
         
-        public async Task HandleAsync(AccountCreatedEvent @event)
+        public async Task HandleAsync(AccountCreatedEvent @event, MessagePayload payload)
         {
             var existingAccount = await _accountRepository.GetAsync(@event.Id);
             if (existingAccount != null)

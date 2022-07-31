@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FinancialPortfolio.CQRS.Commands;
 using FinancialPortfolio.DDD;
+using FinancialPortfolio.Messaging.Models;
 using FinancialPortfolio.Services.Orders.Command.Application.Models.Commands;
 using FinancialPortfolio.Services.Orders.Command.Application.Models.Exceptions;
 using FinancialPortfolio.Services.Orders.Domain.Entities;
@@ -26,7 +27,7 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
             _assetRepository = assetRepository;
         }
         
-        public async Task HandleAsync(CreateOrderCommand message)
+        public async Task HandleAsync(CreateOrderCommand message, MessagePayload payload)
         {
             var existingAccount = await _accountRepository.GetAsync(message.AccountId);
             if (existingAccount is null)
