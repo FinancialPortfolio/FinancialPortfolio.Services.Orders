@@ -1,8 +1,10 @@
-﻿using FinancialPortfolio.Infrastructure.Extensions;
+﻿using FinancialPortfolio.Infrastructure.Shared.Extensions;
+using FinancialPortfolio.Infrastructure.WebApi.Extensions;
 using FinancialPortfolio.Services.Orders.Infrastructure.AutoMapperProfiles;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.EntityConfigurations;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories;
 using FinancialPortfolio.Services.Orders.Query.Application.Services;
+using FinancialPortfolio.Services.Orders.Query.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,20 +16,25 @@ namespace FinancialPortfolio.Services.Orders.Query
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
+        
+        private IWebHostEnvironment WebHostEnvironment { get; }
         
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddCustomProblemDetails(WebHostEnvironment)
+                .AddLogging(Configuration)
                 .AddDefaultRepositoryImplementations(typeof(OrderRepository).Assembly)
                 .AddMongo(Configuration, typeof(MongoModelConfiguration).Assembly)
                 .AddCustomAutoMapper(typeof(AssetProfile).Assembly)
-                .AddGrpc();
+                .AddCustomGrpc();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,6 +45,8 @@ namespace FinancialPortfolio.Services.Orders.Query
             }
 
             app.UseRouting();
+            
+            app.UseLogging();
 
             app.UseEndpoints(endpoints =>
             {

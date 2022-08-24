@@ -5,17 +5,28 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\FinancialPortfolio.Services.Orders.Domain\FinancialPortfolio.Services.Orders.Domain.csproj" />
+        <ProjectReference Include="..\..\Common\FinancialPortfolio.Services.Orders.Domain\FinancialPortfolio.Services.Orders.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="10.1.1" />
-      <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+        <PackageReference Include="AutoMapper" Version="11.0.1"/>
+        <PackageReference Include="FinancialPortfolio.Search.Grpc" Version="2.0.0" GeneratePathProperty="true"/>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.47.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Protos\order.proto" />
-      <Protobuf Include="Protos\order.proto" />
+        <None Remove="Protos\order.proto"/>
+        <Protobuf Include="Protos\order.proto"/>
+
+        <None Remove="Protos\search.proto"/>
+        <Protobuf Include="Protos\search.proto"/>
     </ItemGroup>
+
+    <Target Name="CopyFiles" BeforeTargets="PrepareForBuild">
+        <ItemGroup>
+            <File Include="$(PkgFinancialPortfolio_Search_Grpc)\content\Protos\*.*"></File>
+        </ItemGroup>
+        <Copy SourceFiles="@(File)" DestinationFolder="$(ProjectDir)\Protos"></Copy>
+    </Target>
 
 </Project>

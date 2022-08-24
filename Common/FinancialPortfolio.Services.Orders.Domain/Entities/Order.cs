@@ -7,19 +7,19 @@ namespace FinancialPortfolio.Services.Orders.Domain.Entities
 {
     public class Order : Entity, IAggregateRoot
     {
-        public OrderType Type { get; }
+        public OrderType Type { get; private set; }
         
-        public double Amount { get; }
+        public double Amount { get; private set; }
         
-        public decimal Price { get; }
+        public decimal Price { get; private set; }
         
-        public DateTime DateTime { get; }
+        public DateTime DateTime { get; private set; }
         
-        public decimal Commission { get; }
+        public decimal Commission { get; private set; }
         
-        public Guid AssetId { get; }
+        public Guid AssetId { get; private set; }
         
-        public Guid AccountId { get; }
+        public Guid AccountId { get; private set; }
 
         private Order(OrderType type, double amount, decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId)
         {
