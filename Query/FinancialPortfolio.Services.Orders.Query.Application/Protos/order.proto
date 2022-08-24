@@ -1,12 +1,20 @@
 syntax = "proto3";
 
+import "Protos/search.proto";
+
 package OrderApi;
 
 service Order {
-  rpc GetAll (GetOrdersRequest) returns (OrdersResponse) {}
+  rpc Get (GetOrderQuery) returns (OrderResponse) {}
+  rpc GetAll (GetOrdersQuery) returns (OrdersResponse) {}
 }
 
-message GetOrdersRequest {
+message GetOrderQuery {
+  string id = 1;
+}
+
+message GetOrdersQuery {
+  SearchLibrary.SearchOptions search = 1;
 }
 
 message OrdersResponse {

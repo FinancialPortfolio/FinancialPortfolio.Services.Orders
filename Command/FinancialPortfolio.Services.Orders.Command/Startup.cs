@@ -1,4 +1,5 @@
 ﻿using FinancialPortfolio.Infrastructure.Extensions;
+using FinancialPortfolio.Infrastructure.Shared.Extensions;
 using FinancialPortfolio.Services.Orders.Infrastructure.AutoMapperProfiles;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.EntityConfigurations;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories;
@@ -13,8 +14,8 @@ namespace FinancialPortfolio.Services.Orders.Command
         {
             services
                 .AddDefaultRepositoryImplementations(typeof(OrderRepository).Assembly)
-                .AddInMemoryDomainEventPublisher()
                 .AddMongo(hostContext.Configuration, typeof(MongoModelConfiguration).Assembly)
+                .AddInMemoryDomainEventPublisher()
                 .AddKafkaCQRSMessaging(hostContext.Configuration, hostContext.HostingEnvironment.EnvironmentName)
                 .AddCustomAutoMapper(typeof(OrderProfile).Assembly); 
         }

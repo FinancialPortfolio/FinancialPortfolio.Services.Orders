@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using FinancialPortfolio.Mongo.Repositories;
+using FinancialPortfolio.Search;
 using FinancialPortfolio.Services.Orders.Domain.Entities;
 using FinancialPortfolio.Services.Orders.Domain.Repositories;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Documents;
@@ -27,9 +29,15 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories
             return _mapper.Map<Order>(createdDocument);
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<Order> GetAsync(Guid id)
         {
-            var orderDocuments = await _baseRepository.GetAllAsync();
+            var orderDocument = await _baseRepository.GetAsync(id);
+            return _mapper.Map<Order>(orderDocument);
+        }
+        
+        public async Task<IEnumerable<Order>> GetAllAsync(SearchOptions search)
+        {
+            var orderDocuments = await _baseRepository.GetAllAsync(search);
             return _mapper.Map<IEnumerable<Order>>(orderDocuments);
         }
     }
