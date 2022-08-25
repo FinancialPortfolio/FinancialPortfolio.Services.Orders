@@ -3,7 +3,8 @@
         "FinancialPortfolio.Services.Orders.Query": {
             "commandName": "Project",
             "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:5006;http://localhost:6006"
             },
             "applicationUrl": "https://localhost:5006;http://localhost:6006"
         }
