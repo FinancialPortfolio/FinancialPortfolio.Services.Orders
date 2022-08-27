@@ -16,6 +16,7 @@ namespace FinancialPortfolio.Services.Orders.Command
                 .AddDefaultRepositoryImplementations(typeof(OrderRepository).Assembly)
                 .AddMongo(hostContext.Configuration, typeof(MongoModelConfiguration).Assembly)
                 .AddInMemoryDomainEventPublisher()
+                .AddDefaultDomainEventHandlers()
                 .AddKafkaCQRSMessaging(hostContext.Configuration, hostContext.HostingEnvironment.EnvironmentName)
                 .AddCustomAutoMapper(typeof(OrderProfile).Assembly); 
         }
