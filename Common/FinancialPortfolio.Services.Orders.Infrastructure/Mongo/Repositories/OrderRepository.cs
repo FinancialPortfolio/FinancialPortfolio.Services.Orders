@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FinancialPortfolio.Mongo.Repositories;
 using FinancialPortfolio.Search;
+using FinancialPortfolio.Search.Pagination;
 using FinancialPortfolio.Services.Orders.Domain.Entities;
 using FinancialPortfolio.Services.Orders.Domain.Repositories;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Documents;
@@ -35,10 +36,12 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories
             return _mapper.Map<Order>(orderDocument);
         }
         
-        public async Task<IEnumerable<Order>> GetAllAsync(SearchOptions search)
+        public async Task<PaginationResult<Order>> GetAllAsync(SearchOptions search)
         {
-            var orderDocuments = await _baseRepository.GetAllAsync(search);
-            return _mapper.Map<IEnumerable<Order>>(orderDocuments);
+            var documentsResult = await _baseRepository.GetAllAsync(search);
+            var orders = _mapper.Map<IEnumerable<Order>>(documentsResult.Documents);
+
+            return new PaginationResult<Order>(orders, documentsResult.TotalCount);
         }
     }
 }

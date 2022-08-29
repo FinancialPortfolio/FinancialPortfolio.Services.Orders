@@ -19,6 +19,7 @@ message GetOrdersQuery {
 
 message OrdersResponse {
   repeated OrderResponse orders = 1;
+  int64 TotalCount = 2;
 }
 
 message OrderResponse {

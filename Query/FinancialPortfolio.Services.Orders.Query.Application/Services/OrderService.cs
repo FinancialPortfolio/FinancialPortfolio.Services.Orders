@@ -37,12 +37,13 @@ namespace FinancialPortfolio.Services.Orders.Query.Application.Services
         public override async Task<OrdersResponse> GetAll(GetOrdersQuery request, ServerCallContext context)
         {
             var search = _mapper.Map<SearchOptions>(request.Search);
-            var orders = await _orderRepository.GetAllAsync(search);
+            var ordersResult = await _orderRepository.GetAllAsync(search);
 
-            var orderResponses = _mapper.Map<IEnumerable<OrderResponse>>(orders);
+            var orderResponses = _mapper.Map<IEnumerable<OrderResponse>>(ordersResult.Documents);
             var response = new OrdersResponse
             {
-                Orders = { orderResponses }
+                Orders = { orderResponses },
+                TotalCount = ordersResult.TotalCount
             };
 
             return response;

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using FinancialPortfolio.Search;
+using FinancialPortfolio.Search.Pagination;
 using FinancialPortfolio.Services.Orders.Domain.Entities;
 
 namespace FinancialPortfolio.Services.Orders.Domain.Repositories
@@ -12,6 +12,6 @@ namespace FinancialPortfolio.Services.Orders.Domain.Repositories
         
         Task<Order> GetAsync(Guid id);
         
-        Task<IEnumerable<Order>> GetAllAsync(SearchOptions search);
+        Task<PaginationResult<Order>> GetAllAsync(SearchOptions search);
     }
 }
