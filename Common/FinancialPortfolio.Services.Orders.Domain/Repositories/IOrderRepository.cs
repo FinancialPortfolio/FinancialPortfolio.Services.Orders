@@ -10,6 +10,10 @@ namespace FinancialPortfolio.Services.Orders.Domain.Repositories
     {
         Task<Order> CreateAsync(Order order);
         
+        Task<bool> UpdateAsync(Order order);
+        
+        Task DeleteAsync(Guid id);
+        
         Task<Order> GetAsync(Guid id);
         
         Task<PaginationResult<Order>> GetAllAsync(SearchOptions search);

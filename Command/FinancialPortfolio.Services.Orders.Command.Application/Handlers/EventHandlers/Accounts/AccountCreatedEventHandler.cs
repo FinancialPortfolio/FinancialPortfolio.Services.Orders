@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using FinancialPortfolio.CQRS.Events;
 using FinancialPortfolio.Messaging.Models;
-using FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External;
+using FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External.Accounts;
 using FinancialPortfolio.Services.Orders.Command.Application.Models.Exceptions;
 using FinancialPortfolio.Services.Orders.Domain.Entities;
 using FinancialPortfolio.Services.Orders.Domain.Repositories;
 
-namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.EventHandlers
+namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.EventHandlers.Accounts
 {
     public class AccountCreatedEventHandler : IEventHandler<AccountCreatedEvent>
     {

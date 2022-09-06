@@ -32,5 +32,16 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories
             var accountDocuments = await _baseRepository.GetAsync(id);
             return _mapper.Map<Account>(accountDocuments);
         }
+        
+        public Task<bool> UpdateAsync(Account account)
+        {
+            var accountDocument = _mapper.Map<AccountDocument>(account);
+            return _baseRepository.UpdateAsync(accountDocument);
+        }
+
+        public Task DeleteAsync(Guid id)
+        {
+            return _baseRepository.DeleteAsync(id);
+        }
     }
 }

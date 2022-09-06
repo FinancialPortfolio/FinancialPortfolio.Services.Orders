@@ -2,7 +2,7 @@
 
 namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Documents
 {
-    public class AssetDocument : BaseDocument
+    public abstract class AssetDocument : BaseDocument
     {
         public string Symbol { get; set; }
         

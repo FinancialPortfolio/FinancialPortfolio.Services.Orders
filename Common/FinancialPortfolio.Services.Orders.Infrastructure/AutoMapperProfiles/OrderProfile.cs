@@ -16,6 +16,10 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.AutoMapperProfiles
             CreateMap<Order, OrderResponse>().ReverseMap();
             
             CreateMap<OrderCreatedDomainEvent, OrderCreatedEvent>();
+            
+            CreateMap<OrderUpdatedDomainEvent, OrderUpdatedEvent>();
+            
+            CreateMap<OrderDeletedDomainEvent, OrderDeletedEvent>();
         }
     }
 }

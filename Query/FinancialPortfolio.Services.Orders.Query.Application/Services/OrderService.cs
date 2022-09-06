@@ -25,11 +25,11 @@ namespace FinancialPortfolio.Services.Orders.Query.Application.Services
         {
             var id = Guid.Parse(request.Id);
             
-            var account = await _orderRepository.GetAsync(id);
-            if (account is null)
-                throw new DomainModelNotExistsException($"Account with id: {request.Id} doesn't exist.");
+            var order = await _orderRepository.GetAsync(id);
+            if (order is null)
+                throw new DomainModelNotExistsException($"Order with id: {request.Id} doesn't exist.");
 
-            var response = _mapper.Map<OrderResponse>(account);
+            var response = _mapper.Map<OrderResponse>(order);
             
             return response;
         }

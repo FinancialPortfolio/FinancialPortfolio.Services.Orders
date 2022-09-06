@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FinancialPortfolio.Infrastructure" Version="2.0.12" />
+      <PackageReference Include="FinancialPortfolio.Infrastructure" Version="2.0.15" />
     </ItemGroup>
 
 </Project>

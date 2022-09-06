@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FinancialPortfolio.Services.Orders.Domain.Entities;
 
 namespace FinancialPortfolio.Services.Orders.Domain.Repositories
 {
-    public interface IAssetRepository
+    public interface IStockRepository
     {
-        Task<Asset> CreateAsync(Asset asset);
+        Task<IEnumerable<Stock>> CreateManyAsync(IEnumerable<Stock> assets);
         
-        Task<Asset> GetAsync(Guid id);
+        Task<Stock> GetAsync(Guid id);
     }
 }

@@ -14,17 +14,17 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IAccountRepository _accountRepository;
-        private readonly IAssetRepository _assetRepository;
+        private readonly IStockRepository _stockRepository;
         private readonly IDomainEventPublisher _domainEventPublisher;
 
         public CreateOrderCommandHandler(
             IOrderRepository orderRepository, IDomainEventPublisher domainEventPublisher, 
-            IAccountRepository accountRepository, IAssetRepository assetRepository)
+            IAccountRepository accountRepository, IStockRepository stockRepository)
         {
             _orderRepository = orderRepository;
             _domainEventPublisher = domainEventPublisher;
             _accountRepository = accountRepository;
-            _assetRepository = assetRepository;
+            _stockRepository = stockRepository;
         }
         
         public async Task HandleAsync(CreateOrderCommand message, MessagePayload payload)
@@ -33,7 +33,7 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
             if (existingAccount is null)
                 throw new DomainModelNotExistsException($"Account with id: {message.AccountId} doesn't exist");
             
-            var existingAsset = await _assetRepository.GetAsync(message.AssetId);
+            var existingAsset = await _stockRepository.GetAsync(message.AssetId);
             if (existingAsset is null)
                 throw new DomainModelNotExistsException($"Asset with id: {message.AssetId} doesn't exist");
             

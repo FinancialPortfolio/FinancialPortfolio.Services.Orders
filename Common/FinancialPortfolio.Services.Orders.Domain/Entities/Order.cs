@@ -40,5 +40,17 @@ namespace FinancialPortfolio.Services.Orders.Domain.Entities
 
             return order;
         }
+        
+        public void Update(OrderType type, double amount, decimal price, DateTime dateTime, decimal commission, Guid assetId)
+        {
+            Type = type;
+            Amount = amount;
+            Price = price;
+            DateTime = dateTime;
+            Commission = commission;
+            AssetId = assetId;
+            
+            AddEvent(new OrderUpdatedDomainEvent(Id, Version, Type, Amount, Price, DateTime, Commission, AssetId,  AccountId));
+        }
     }
 }

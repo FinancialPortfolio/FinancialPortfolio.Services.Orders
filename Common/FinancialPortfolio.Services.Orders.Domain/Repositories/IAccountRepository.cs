@@ -9,5 +9,9 @@ namespace FinancialPortfolio.Services.Orders.Domain.Repositories
         Task<Account> CreateAsync(Account account);
         
         Task<Account> GetAsync(Guid id);
+        
+        Task<bool> UpdateAsync(Account account);
+
+        Task DeleteAsync(Guid id);
     }
 }

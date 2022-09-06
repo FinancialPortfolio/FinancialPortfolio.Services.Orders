@@ -11,5 +11,11 @@ namespace FinancialPortfolio.Services.Orders.Domain.Entities
         {
             Name = name;
         }
+        
+        public void Update(string name, int version)
+        {
+            Name = name;
+            Version = version;
+        }
     }
 }
