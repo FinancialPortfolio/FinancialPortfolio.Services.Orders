@@ -1,5 +1,7 @@
 ﻿using FinancialPortfolio.Infrastructure.Shared.Extensions;
 using FinancialPortfolio.Infrastructure.WebApi.Extensions;
+using FinancialPortfolio.Operations.Grpc.Extensions;
+using FinancialPortfolio.Operations.WebApi.Extensions;
 using FinancialPortfolio.Services.Orders.Infrastructure.AutoMapperProfiles;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.EntityConfigurations;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories;
@@ -31,6 +33,7 @@ namespace FinancialPortfolio.Services.Orders.Query
             services
                 .AddCustomProblemDetails(WebHostEnvironment)
                 .AddLogging(Configuration)
+                .AddGrpcOperationContext()
                 .AddDefaultRepositoryImplementations(typeof(OrderRepository).Assembly)
                 .AddMongo(Configuration, typeof(MongoModelConfiguration).Assembly)
                 .AddCustomAutoMapper(typeof(AssetProfile).Assembly)
@@ -45,9 +48,9 @@ namespace FinancialPortfolio.Services.Orders.Query
             }
 
             app.UseRouting();
-            
-            app.UseLogging();
 
+            app.UseOperationContextMiddleware();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<OrderService>();

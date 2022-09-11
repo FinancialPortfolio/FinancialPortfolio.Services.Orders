@@ -10,9 +10,9 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="11.0.1" />
-      <PackageReference Include="FinancialPortfolio.CQRS.Commands" Version="2.0.18" />
-      <PackageReference Include="FinancialPortfolio.CQRS.Events" Version="2.0.18" />
-      <PackageReference Include="FinancialPortfolio.Messaging" Version="2.0.18" />
+      <PackageReference Include="FinancialPortfolio.CQRS.Commands" Version="2.0.23" />
+      <PackageReference Include="FinancialPortfolio.CQRS.Events" Version="2.0.23" />
+      <PackageReference Include="FinancialPortfolio.Messaging" Version="2.0.23" />
     </ItemGroup>
 
 </Project>
