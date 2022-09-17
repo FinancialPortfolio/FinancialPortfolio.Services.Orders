@@ -10,5 +10,7 @@ namespace FinancialPortfolio.Services.Orders.Domain.Repositories
         Task<IEnumerable<Stock>> CreateManyAsync(IEnumerable<Stock> assets);
         
         Task<Stock> GetAsync(Guid id);
+        
+        Task<IEnumerable<Stock>> GetAllAsync(IEnumerable<string> symbols);
     }
 }

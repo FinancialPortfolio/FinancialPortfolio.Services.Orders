@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FinancialPortfolio.Mongo.Repositories;
@@ -32,6 +33,12 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories
         {
             var stockDocument = await _baseRepository.GetAsync(id);
             return _mapper.Map<Stock>(stockDocument);
+        }
+
+        public async Task<IEnumerable<Stock>> GetAllAsync(IEnumerable<string> symbols)
+        {
+            var documentsResult = await _baseRepository.GetAllAsync(stock => symbols.Contains(stock.Symbol));
+            return _mapper.Map<IEnumerable<Stock>>(documentsResult);
         }
     }
 }

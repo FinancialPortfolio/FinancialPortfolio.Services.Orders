@@ -17,6 +17,8 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.AutoMapperProfiles
             
             CreateMap<OrderCreatedDomainEvent, OrderCreatedEvent>();
             
+            CreateMap<OrdersIntegratedDomainEvent, OrdersIntegratedEvent>();
+            
             CreateMap<OrderUpdatedDomainEvent, OrderUpdatedEvent>();
             
             CreateMap<OrderDeletedDomainEvent, OrderDeletedEvent>();

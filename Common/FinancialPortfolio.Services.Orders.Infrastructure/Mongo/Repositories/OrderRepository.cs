@@ -30,6 +30,14 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories
             return _mapper.Map<Order>(createdDocument);
         }
 
+        public async Task<IEnumerable<Order>> CreateManyAsync(IEnumerable<Order> orders)
+        {
+            var orderDocuments = _mapper.Map<IEnumerable<OrderDocument>>(orders);
+            var createdDocuments = await _baseRepository.CreateManyAsync(orderDocuments);
+            
+            return _mapper.Map<IEnumerable<Order>>(createdDocuments);
+        }
+
         public Task<bool> UpdateAsync(Order order)
         {
             var orderDocument = _mapper.Map<OrderDocument>(order);
