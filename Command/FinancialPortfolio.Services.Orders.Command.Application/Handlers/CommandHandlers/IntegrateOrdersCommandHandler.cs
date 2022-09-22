@@ -35,34 +35,45 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
             if (existingAccount is null)
                 throw new DomainModelNotExistsException($"Account with id: {message.AccountId} doesn't exist");
 
-            var assets = await GetAssetsAsync(message);
-
-            var orders = new List<Order>();
-            foreach (var command in message.Orders)
-            {
-                var asset = assets.First(a => a.Symbol == command.Symbol);
-                var order = Order.Create(command.Type, command.Amount, command.Price, command.DateTime, command.Commission, asset.Id, message.AccountId);
-                orders.Add(order);
-            }
+            var orders = await GetOrdersAsync(message);
+            
             await _orderRepository.CreateManyAsync(orders);
 
             var events = orders.SelectMany(o => o.Events) as IEnumerable<OrderCreatedDomainEvent>;
             await _domainEventPublisher.PublishAsync(new OrdersIntegratedDomainEvent(events));
         }
 
-        private async Task<IEnumerable<Stock>> GetAssetsAsync(IntegrateOrdersCommand message)
+        private async Task<IEnumerable<Order>> GetOrdersAsync(IntegrateOrdersCommand message)
         {
             var symbols = message.Orders.Select(o => o.Symbol);
-            var existingAssets = await _stockRepository.GetAllAsync(symbols);
+            var stocks = await _stockRepository.GetAllAsync(symbols);
             
-            var missingAssets = symbols.Except(existingAssets.Select(a => a.Symbol));
-            if (missingAssets.Any())
+            var orders = new List<Order>();
+            foreach (var command in message.Orders)
             {
-                var missingSymbols = string.Join(", ", missingAssets);
-                throw new DomainModelNotExistsException($"Assets with symbols: {missingSymbols} don't exist");
+                var stock = stocks.FirstOrDefault(stock => Compare(command, stock));
+                if (stock is null)
+                    continue;
+                
+                var order = Order.Create(command.Type, command.Amount, command.Price, command.DateTime, command.Commission, stock.Id, message.AccountId);
+                orders.Add(order);
             }
 
-            return existingAssets;
+            return orders;
+        }
+        
+        private static bool Compare(IntegrateOrderCommand order, Stock stock)
+        {
+            if (order.Symbol != stock.Symbol)
+                return false;
+            
+            if (order.Currency is not null && order.Currency != stock.Currency)
+                return false;
+            
+            if (order.Exchange is not null && order.Exchange != stock.Exchange)
+                return false;
+
+            return true;
         }
     }
 }

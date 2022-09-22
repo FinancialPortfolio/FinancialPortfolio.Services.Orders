@@ -37,6 +37,7 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.EntityConfigur
             BsonClassMap.RegisterClassMap<StockDocument>(cm =>
             {
                 cm.MapProperty(u => u.Exchange).SetIsRequired(true);
+                cm.MapProperty(u => u.Currency).SetIsRequired(true);
             });
         }
     }
