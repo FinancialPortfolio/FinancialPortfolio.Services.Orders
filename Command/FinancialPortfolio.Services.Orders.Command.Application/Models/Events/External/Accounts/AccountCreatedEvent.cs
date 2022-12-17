@@ -10,11 +10,14 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Models.Events.E
         public Guid Id { get; }
         
         public string Name { get; }
+        
+        public Guid UserId { get; }
 
-        public AccountCreatedEvent(Guid id, string name)
+        public AccountCreatedEvent(Guid id, string name, Guid userId)
         {
             Id = id;
             Name = name;
+            UserId = userId;
         }
     }
 }

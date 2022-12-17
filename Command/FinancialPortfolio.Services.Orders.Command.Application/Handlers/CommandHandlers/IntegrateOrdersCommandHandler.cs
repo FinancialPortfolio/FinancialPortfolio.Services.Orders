@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using FinancialPortfolio.Messaging.Models;
 using FinancialPortfolio.Services.Orders.Command.Application.Models.Commands;
 using FinancialPortfolio.Services.Orders.Command.Application.Models.Exceptions;
 using FinancialPortfolio.Services.Orders.Domain.Entities;
+using FinancialPortfolio.Services.Orders.Domain.Entities.Assets;
 using FinancialPortfolio.Services.Orders.Domain.Events;
 using FinancialPortfolio.Services.Orders.Domain.Repositories;
 
@@ -16,17 +18,17 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IAccountRepository _accountRepository;
-        private readonly IStockRepository _stockRepository;
+        private readonly IAssetRepository _assetRepository;
         private readonly IDomainEventPublisher _domainEventPublisher;
 
         public IntegrateOrdersCommandHandler(
             IOrderRepository orderRepository, IDomainEventPublisher domainEventPublisher, 
-            IAccountRepository accountRepository, IStockRepository stockRepository)
+            IAccountRepository accountRepository, IAssetRepository assetRepository)
         {
             _orderRepository = orderRepository;
             _domainEventPublisher = domainEventPublisher;
             _accountRepository = accountRepository;
-            _stockRepository = stockRepository;
+            _assetRepository = assetRepository;
         }
         
         public async Task HandleAsync(IntegrateOrdersCommand message, MessagePayload payload)
@@ -35,7 +37,7 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
             if (existingAccount is null)
                 throw new DomainModelNotExistsException($"Account with id: {message.AccountId} doesn't exist");
 
-            var orders = await GetOrdersAsync(message);
+            var orders = await GetOrdersAsync(message, existingAccount.UserId);
             
             await _orderRepository.CreateManyAsync(orders);
 
@@ -43,36 +45,43 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
             await _domainEventPublisher.PublishAsync(new OrdersIntegratedDomainEvent(events));
         }
 
-        private async Task<IEnumerable<Order>> GetOrdersAsync(IntegrateOrdersCommand message)
+        private async Task<IEnumerable<Order>> GetOrdersAsync(IntegrateOrdersCommand message, Guid userId)
         {
             var symbols = message.Orders.Select(o => o.Symbol);
-            var stocks = await _stockRepository.GetAllAsync(symbols);
+            var assets = await _assetRepository.GetAllAsync(symbols);
             
             var orders = new List<Order>();
             foreach (var command in message.Orders)
             {
-                var stock = stocks.FirstOrDefault(stock => Compare(command, stock));
-                if (stock is null)
+                var asset = assets.FirstOrDefault(asset => Compare(command, asset));
+                if (asset is null)
                     continue;
                 
-                var order = Order.Create(command.Type, command.Amount, command.Price, command.DateTime, command.Commission, stock.Id, message.AccountId);
+                var order = Order.Create(command.Type, command.Amount, command.Price, command.DateTime, command.Commission, asset.Id, message.AccountId, userId);
                 orders.Add(order);
             }
 
             return orders;
         }
         
-        private static bool Compare(IntegrateOrderCommand order, Stock stock)
+        private static bool Compare(IntegrateOrderCommand order, Asset asset)
         {
-            if (order.Symbol != stock.Symbol)
+            if (order.Symbol != asset.Symbol)
                 return false;
             
-            if (order.Currency is not null && order.Currency != stock.Currency)
-                return false;
-            
-            if (order.Exchange is not null && order.Exchange != stock.Exchange)
+            if (order.Currency is not null && order.Currency != asset.Currency)
                 return false;
 
+            if (order.Exchange is not null)
+            {
+                return asset switch
+                {
+                    Stock stock => stock.Exchange == order.Exchange,
+                    IndexFund indexFund => indexFund.Exchange == order.Exchange,
+                    MutualFund mutualFund => mutualFund.Exchange == order.Exchange,
+                    _ => false
+                };
+            }
             return true;
         }
     }

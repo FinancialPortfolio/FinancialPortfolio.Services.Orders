@@ -23,7 +23,7 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.EventH
             if (existingAccount != null)
                 throw new DomainModelAlreadyExistsException($"Account with id: {@event.Id} already exists");
             
-            var account = new Account(@event.Id, @event.Name);
+            var account = new Account(@event.Id, @event.Name, @event.UserId);
             await _accountRepository.CreateAsync(account);
         }
     }

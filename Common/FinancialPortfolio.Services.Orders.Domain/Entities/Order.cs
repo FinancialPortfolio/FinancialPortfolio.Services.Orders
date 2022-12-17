@@ -20,8 +20,10 @@ namespace FinancialPortfolio.Services.Orders.Domain.Entities
         public Guid AssetId { get; private set; }
         
         public Guid AccountId { get; private set; }
+        
+        public Guid UserId { get; private set; }
 
-        private Order(OrderType type, double amount, decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId)
+        private Order(OrderType type, double amount, decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId, Guid userId)
         {
             Type = type;
             Amount = amount;
@@ -30,13 +32,14 @@ namespace FinancialPortfolio.Services.Orders.Domain.Entities
             Commission = commission;
             AssetId = assetId;
             AccountId = accountId;
+            UserId = userId;
         }
 
-        public static Order Create(OrderType type, double amount, decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId)
+        public static Order Create(OrderType type, double amount, decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId, Guid userId)
         {
-            var order = new Order(type, amount, price, dateTime, commission, assetId, accountId);
+            var order = new Order(type, amount, price, dateTime, commission, assetId, accountId, userId);
             order.AddEvent(new OrderCreatedDomainEvent(order.Id, order.Version, order.Type, 
-                order.Amount, order.Price, order.DateTime, order.Commission, order.AssetId, order.AccountId));
+                order.Amount, order.Price, order.DateTime, order.Commission, order.AssetId, order.AccountId, order.UserId));
 
             return order;
         }

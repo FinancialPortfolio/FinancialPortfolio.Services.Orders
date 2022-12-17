@@ -1,6 +1,7 @@
 ﻿using System;
 using FinancialPortfolio.Mongo.ModelConfigurations;
 using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Documents;
+using FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Documents.Assets;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
@@ -20,24 +21,40 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.EntityConfigur
                 cm.MapProperty(u => u.DateTime).SetIsRequired(true);
                 cm.MapProperty(u => u.DateTime).SetSerializer(new DateTimeSerializer(DateTimeKind.Utc, BsonType.String));
                 cm.MapProperty(u => u.AssetId);
-                cm.MapProperty(u => u.AccountId);
+                cm.MapProperty(u => u.AccountId).SetIsRequired(true);
+                cm.MapProperty(u => u.UserId).SetIsRequired(true);
             });
             
             BsonClassMap.RegisterClassMap<AccountDocument>(cm =>
             {
                 cm.MapProperty(u => u.Name).SetIsRequired(true);
+                cm.MapProperty(u => u.UserId).SetIsRequired(true);
             });
             
             BsonClassMap.RegisterClassMap<AssetDocument>(cm =>
             {
                 cm.MapProperty(u => u.Symbol).SetIsRequired(true);
                 cm.MapProperty(u => u.Name).SetIsRequired(true);
+                cm.MapProperty(u => u.Currency).SetIsRequired(false);
+            });
+            
+            BsonClassMap.RegisterClassMap<BondDocument>();
+            
+            BsonClassMap.RegisterClassMap<CryptocurrencyDocument>();
+            
+            BsonClassMap.RegisterClassMap<IndexFundDocument>(cm =>
+            {
+                cm.MapProperty(u => u.Exchange).SetIsRequired(true);
+            });
+            
+            BsonClassMap.RegisterClassMap<MutualFundDocument>(cm =>
+            {
+                cm.MapProperty(u => u.Exchange).SetIsRequired(true);
             });
             
             BsonClassMap.RegisterClassMap<StockDocument>(cm =>
             {
                 cm.MapProperty(u => u.Exchange).SetIsRequired(true);
-                cm.MapProperty(u => u.Currency).SetIsRequired(true);
             });
         }
     }

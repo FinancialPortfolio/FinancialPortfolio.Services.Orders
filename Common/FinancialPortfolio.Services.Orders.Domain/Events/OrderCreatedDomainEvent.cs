@@ -23,9 +23,11 @@ namespace FinancialPortfolio.Services.Orders.Domain.Events
         public Guid AssetId { get; }
         
         public Guid AccountId { get; }
+        
+        public Guid UserId { get; }
 
         public OrderCreatedDomainEvent(Guid id, int version, OrderType type, double amount, 
-            decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId)
+            decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId, Guid userId)
         {
             Id = id;
             Version = version;
@@ -36,6 +38,7 @@ namespace FinancialPortfolio.Services.Orders.Domain.Events
             Commission = commission;
             AssetId = assetId;
             AccountId = accountId;
+            UserId = userId;
         }
     }
 }

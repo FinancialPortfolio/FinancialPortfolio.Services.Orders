@@ -14,17 +14,17 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IAccountRepository _accountRepository;
-        private readonly IStockRepository _stockRepository;
+        private readonly IAssetRepository _assetRepository;
         private readonly IDomainEventPublisher _domainEventPublisher;
 
         public CreateOrderCommandHandler(
             IOrderRepository orderRepository, IDomainEventPublisher domainEventPublisher, 
-            IAccountRepository accountRepository, IStockRepository stockRepository)
+            IAccountRepository accountRepository, IAssetRepository assetRepository)
         {
             _orderRepository = orderRepository;
             _domainEventPublisher = domainEventPublisher;
             _accountRepository = accountRepository;
-            _stockRepository = stockRepository;
+            _assetRepository = assetRepository;
         }
         
         public async Task HandleAsync(CreateOrderCommand message, MessagePayload payload)
@@ -33,12 +33,12 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
             if (existingAccount is null)
                 throw new DomainModelNotExistsException($"Account with id: {message.AccountId} doesn't exist");
             
-            var existingAsset = await _stockRepository.GetAsync(message.AssetId);
+            var existingAsset = await _assetRepository.GetAsync(message.AssetId);
             if (existingAsset is null)
                 throw new DomainModelNotExistsException($"Asset with id: {message.AssetId} doesn't exist");
             
             var order = Order.Create(message.Type, message.Amount, message.Price, 
-                message.DateTime, message.Commission, message.AssetId, message.AccountId);
+                message.DateTime, message.Commission, message.AssetId, message.AccountId, existingAccount.UserId);
             await _orderRepository.CreateAsync(order);
 
             await _domainEventPublisher.PublishAsync(order.Events.ToList());

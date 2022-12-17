@@ -12,13 +12,13 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
     public class UpdateOrderCommandHandler : ICommandHandler<UpdateOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IStockRepository _stockRepository;
+        private readonly IAssetRepository _assetRepository;
         private readonly IDomainEventPublisher _domainEventPublisher;
 
-        public UpdateOrderCommandHandler(IOrderRepository orderRepository, IStockRepository stockRepository, IDomainEventPublisher domainEventPublisher)
+        public UpdateOrderCommandHandler(IOrderRepository orderRepository, IAssetRepository assetRepository, IDomainEventPublisher domainEventPublisher)
         {
             _orderRepository = orderRepository;
-            _stockRepository = stockRepository;
+            _assetRepository = assetRepository;
             _domainEventPublisher = domainEventPublisher;
         }
         
@@ -28,7 +28,7 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
             if (order is null)
                 throw new DomainModelNotExistsException($"Order with id: {message.Id} doesn't exist.");
             
-            var existingAsset = await _stockRepository.GetAsync(message.AssetId);
+            var existingAsset = await _assetRepository.GetAsync(message.AssetId);
             if (existingAsset is null)
                 throw new DomainModelNotExistsException($"Asset with id: {message.AssetId} doesn't exist");
 

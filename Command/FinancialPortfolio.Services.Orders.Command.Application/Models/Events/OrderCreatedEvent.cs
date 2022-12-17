@@ -25,9 +25,11 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Models.Events
         public Guid AssetId { get; }
         
         public Guid AccountId { get; }
+        
+        public Guid UserId { get; }
 
         public OrderCreatedEvent(Guid id, int version, OrderType type, double amount, 
-            decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId)
+            decimal price, DateTime dateTime, decimal commission, Guid assetId, Guid accountId, Guid userId)
         {
             Id = id;
             Version = version;
@@ -38,6 +40,7 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Models.Events
             Commission = commission;
             AssetId = assetId;
             AccountId = accountId;
+            UserId = userId;
         }
     }
 }

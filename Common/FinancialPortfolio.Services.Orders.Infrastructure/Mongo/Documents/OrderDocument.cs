@@ -19,5 +19,7 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Documents
         public Guid AssetId { get; set; }
         
         public Guid AccountId { get; set; }
+        
+        public Guid UserId { get; set; }
     }
 }
