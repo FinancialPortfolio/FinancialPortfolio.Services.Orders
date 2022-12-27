@@ -1,7 +1,7 @@
 using System;
-using FinancialPortfolio.Services.Categories.Command.Application.Models.Events.External.Assets.Asset;
+using FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External.Assets.Asset;
 
-namespace FinancialPortfolio.Services.Categories.Command.Application.Models.Events.External.Assets.MutualFund
+namespace FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External.Assets.MutualFund
 {
     public record MutualFundCreatedEvent : AssetCreatedEvent
     {

@@ -2,7 +2,7 @@ using System;
 using FinancialPortfolio.CQRS.Events;
 using FinancialPortfolio.Messaging.Attributes;
 
-namespace FinancialPortfolio.Services.Categories.Command.Application.Models.Events.External.Assets.Asset
+namespace FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External.Assets.Asset
 {
     [Message("Assets", "Asset")]
     public record AssetUpdatedEvent : IEvent

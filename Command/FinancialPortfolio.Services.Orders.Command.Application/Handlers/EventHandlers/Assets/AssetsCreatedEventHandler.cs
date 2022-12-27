@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FinancialPortfolio.CQRS.Events;
 using FinancialPortfolio.Messaging.Models;
-using FinancialPortfolio.Services.Categories.Command.Application.Models.Events.External.Assets.Asset;
+using FinancialPortfolio.Services.Orders.Command.Application.Models.Events.External.Assets.Asset;
 using FinancialPortfolio.Services.Orders.Domain.Entities.Assets;
 using FinancialPortfolio.Services.Orders.Domain.Repositories;
 
