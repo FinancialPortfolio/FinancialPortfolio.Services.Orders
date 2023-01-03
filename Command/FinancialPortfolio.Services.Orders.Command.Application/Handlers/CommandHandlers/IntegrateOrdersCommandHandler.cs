@@ -41,7 +41,7 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.Comman
             
             await _orderRepository.CreateManyAsync(orders);
 
-            var events = orders.SelectMany(o => o.Events) as IEnumerable<OrderCreatedDomainEvent>;
+            var events = orders.SelectMany(o => o.Events).Select(e => e as OrderCreatedDomainEvent).ToList();
             await _domainEventPublisher.PublishAsync(new OrdersIntegratedDomainEvent(events));
         }
 
