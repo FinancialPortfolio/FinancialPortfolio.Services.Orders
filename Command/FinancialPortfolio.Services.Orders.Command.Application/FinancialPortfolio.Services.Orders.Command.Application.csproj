@@ -10,10 +10,10 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="11.0.1" />
-      <PackageReference Include="FinancialPortfolio.CQRS.Commands" Version="2.0.34" />
-      <PackageReference Include="FinancialPortfolio.CQRS.Events" Version="2.0.34" />
-      <PackageReference Include="FinancialPortfolio.Messaging" Version="2.0.34" />
-      <PackageReference Include="FinancialPortfolio.Shared" Version="2.0.34" />
+      <PackageReference Include="FinancialPortfolio.CQRS.Commands" Version="2.0.37" />
+      <PackageReference Include="FinancialPortfolio.CQRS.Events" Version="2.0.37" />
+      <PackageReference Include="FinancialPortfolio.Messaging" Version="2.0.37" />
+      <PackageReference Include="FinancialPortfolio.Shared" Version="2.0.37" />
     </ItemGroup>
 
 </Project>

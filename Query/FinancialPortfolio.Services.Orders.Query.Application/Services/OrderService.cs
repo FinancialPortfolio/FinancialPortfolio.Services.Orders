@@ -24,11 +24,15 @@ namespace FinancialPortfolio.Services.Orders.Query.Application.Services
         public override async Task<OrderResponse> Get(GetOrderQuery request, ServerCallContext context)
         {
             var id = Guid.Parse(request.Id);
+            var accountId = Guid.Parse(request.AccountId);
             
             var order = await _orderRepository.GetAsync(id);
             if (order is null)
                 throw new DomainModelNotExistsException($"Order with id: {request.Id} doesn't exist.");
 
+            if (order.AccountId != accountId)
+                throw new DomainModelNotExistsException($"Order with id: {request.Id} and accountId: {request.AccountId} doesn't exist.");
+            
             var response = _mapper.Map<OrderResponse>(order);
             
             return response;

@@ -1,8 +1,8 @@
 using FinancialPortfolio.Infrastructure.WebApi.Extensions;
-using FinancialPortfolio.ProblemDetails.Grpc.ProblemDetails;
 using FinancialPortfolio.Services.Orders.Query.Application.Models.Exceptions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using NotFoundProblemDetails = FinancialPortfolio.ProblemDetails.Grpc.ProblemDetails.NotFoundProblemDetails;
 
 namespace FinancialPortfolio.Services.Orders.Query.Extensions
 {
