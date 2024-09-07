@@ -5,8 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FinancialPortfolio.DDD" Version="2.0.37" />
-      <PackageReference Include="FinancialPortfolio.Search" Version="2.0.37" />
+      <PackageReference Include="FinancialPortfolio.DDD" Version="3.0.2" />
+      <PackageReference Include="FinancialPortfolio.Search" Version="3.0.2" />
     </ItemGroup>
 
 </Project>

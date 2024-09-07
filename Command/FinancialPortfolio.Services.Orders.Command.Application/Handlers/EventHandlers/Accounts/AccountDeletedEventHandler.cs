@@ -9,10 +9,12 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.EventH
     public class AccountDeletedEventHandler : IEventHandler<AccountDeletedEvent>
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public AccountDeletedEventHandler(IAccountRepository accountRepository)
+        public AccountDeletedEventHandler(IAccountRepository accountRepository, IOrderRepository orderRepository)
         {
             _accountRepository = accountRepository;
+            _orderRepository = orderRepository;
         }
 
         public async Task HandleAsync(AccountDeletedEvent message, MessagePayload payload)
@@ -22,6 +24,8 @@ namespace FinancialPortfolio.Services.Orders.Command.Application.Handlers.EventH
                 return;
 
             await _accountRepository.DeleteAsync(account.Id);
+
+            await _orderRepository.DeleteAllAsync(account.Id);
         }
     }
 }

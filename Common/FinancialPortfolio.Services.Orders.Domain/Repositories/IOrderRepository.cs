@@ -17,6 +17,8 @@ namespace FinancialPortfolio.Services.Orders.Domain.Repositories
         
         Task DeleteAsync(Guid id);
         
+        Task DeleteAllAsync(Guid accountId);
+        
         Task<Order> GetAsync(Guid id);
         
         Task<PaginationResult<Order>> GetAllAsync(SearchOptions search);

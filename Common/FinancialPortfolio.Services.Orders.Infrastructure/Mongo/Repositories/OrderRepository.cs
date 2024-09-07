@@ -48,7 +48,12 @@ namespace FinancialPortfolio.Services.Orders.Infrastructure.Mongo.Repositories
         {
             return _baseRepository.DeleteAsync(id);
         }
-        
+
+        public Task DeleteAllAsync(Guid accountId)
+        {
+            return _baseRepository.DeleteManyAsync(order => order.AccountId == accountId);
+        }
+
         public async Task<Order> GetAsync(Guid id)
         {
             var orderDocument = await _baseRepository.GetAsync(id);
